@@ -22,27 +22,28 @@
         // 利用缓存来解决重绘图片闪动问题
         var tempCanvas = document.getElementById('canvas2')
         const tempCtx = tempCanvas.getContext('2d')
-        tempCanvas.width = 280; tempCanvas.height = 280
+        tempCanvas.width = 280
+        tempCanvas.height = 280
         let image = new Image()
         image.src = 'image/quan.png'
         image.onload = () => {
             // 原点移动至中心
-            tempCtx.drawImage(image,0,0,280,280);
+            tempCtx.drawImage(image,0,0,280,280)
         }
         //==============================
         // 绘制文字数组
-        let textArr = ['海阔天空','技术能力','资金雄厚','维修控制','安居乐业','走马观花','画龙点睛','去其糟粕','逆风而行','职业发展'];
+        let textArr = ['海阔天空','技术能力','资金雄厚','维修控制','安居乐业','走马观花','画龙点睛','去其糟粕','逆风而行','职业发展']
 
-        let canvas = document.getElementById('canvas');
+        let canvas = document.getElementById('canvas')
         // 绑定鼠标上移事件
-        canvas.addEventListener('mousemove',clickEvent)
+        canvas.addEventListener('mousemove', clickEvent)
 
         //设置绘图环境
-        let  ctx= canvas.getContext('2d');
+        let  ctx = canvas.getContext('2d')
 
         canvas.width = 500
         canvas.height = 500
-        let r = 500 / 2;
+        let r = 500 / 2
 
         //    -----------------------------------
         function drawAll (n) {
@@ -51,14 +52,18 @@
             // 因为界面的原点在改变
             if (n == 1) {
                 // 界面初始化的时候将画布的原点移动至画布中心
-                ctx.translate(r,r); //将画笔移动到圆形
+                //将画笔移动到圆心
+                ctx.translate(r,r)
             } else  {
                 // 当轮子边缘的文字发生该表时，由于前面已经修改了原点坐标，所以直接将画笔移动到原点坐标就行
-                ctx.translate(0,0); //将画笔移动到圆形
+                //将画笔移动到圆心
+                ctx.translate(0,0)
             }
             // ctx.translate(r,r); //将画笔移动到圆形
-            ctx.lineWidth = 3; //设置画笔的线宽
-            ctx.beginPath(); //画笔开始
+            ctx.lineWidth = 3
+            //设置画笔的线宽
+            ctx.beginPath()
+            //画笔开始
             // 绘制圆环边缘渐变边缘颜色
             var arcColor = ctx.createLinearGradient(-170, -170, 0, 170)
             arcColor.addColorStop(0, '#8ec1ff')
@@ -66,85 +71,90 @@
             arcColor.addColorStop(0.5, '#75b1ff')
             arcColor.addColorStop(0.7,'#5998ff')
             arcColor.addColorStop(1, '#2065ff')
-            ctx.strokeStyle= arcColor;//设置画笔的颜色
-            ctx.arc(0,0,r - 80,0,2*Math.PI,false); //绘制圆形，坐标0,0,半径250-80，整圆（0-360度），false表示顺时针
-            ctx.closePath();
-            ctx.stroke(); //绘图
+            //设置画笔的颜色
+            ctx.strokeStyle= arcColor
+            //绘制圆形，坐标0,0,半径250-80，整圆（0-360度），false表示顺时针
+            ctx.arc(0, 0, r - 80, 0, 2*Math.PI, false)
+            ctx.closePath()
+            ctx.stroke() //绘图
 
             let image = new Image()
             image.src = 'image/quan.png'
             image.onload = () => {
                 // 原点移动至中心
-                ctx.drawImage(image,-140,-140,280,280);
+                ctx.drawImage(image,-140,-140,280,280)
             }
-            // 将缓存的canvas直接绘制到界面（缓存了中间轮胎界面）
-         //   绘制文字
-        ctx.font = '13px Arial';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillStyle="#000000";
-        let lengths = textArr.length
-        textArr.forEach(function(text,i){
-            //弧度
-            let rad = 2*Math.PI/lengths*i;
-            // 计算小圆心坐标
-            let x = (r - 40)*Math.cos(rad);
-            let y = (r - 40)*Math.sin(rad);
-            ctx.fillText(text,x+0.5,y+0.5);
-        });
-        //画刻度小圆点和边缘放射线
-        for(let i = 0;i<lengths;i++){
-            //
-            let rad = 2*Math.PI/lengths*i;
-            let x = (r - 80)*Math.cos(rad);
-            let y = (r - 80)*Math.sin(rad);
-            //    ==============================
-            // 绘制边缘灰色半透明小圆点
-            ctx.beginPath()
-            ctx.fillStyle = 'rgba(226,235,250,0.8)'
-            ctx.arc(x,y,8,0,2*Math.PI,false);
-            ctx.closePath();
-            ctx.fill();
-            // 绘制蓝色小圆点
-            ctx.beginPath();
-            ctx.fillStyle = '#208fe5';
-            ctx.arc(x,y,4,0,2*Math.PI,false);
-            ctx.closePath();
-            ctx.fill();
-        }
-        }
-        function drawOne (Cx,Cy) {
+           //   绘制文字
+            ctx.font = '13px Arial'
+            ctx.textAlign = 'center'
+            ctx.textBaseline = 'middle'
+            ctx.fillStyle ="#000000"
+            let lengths = textArr.length
+            textArr.forEach(function(text,i){
+                //弧度
+                let rad = 2 * Math.PI / lengths * i
+                // 计算小圆心坐标
+                let x = ( r - 40 ) * Math.cos(rad)
+                let y = (r - 40) * Math.sin(rad)
+                ctx.fillText(text, x+0.5, y+0.5)
+            })
+            //画刻度小圆点和边缘放射线
+            for(let i = 0;i < lengths; i++){
+                //
+                let rad = 2*Math.PI/lengths*i
+                let x = (r - 80)*Math.cos(rad)
+                let y = (r - 80)*Math.sin(rad)
+                //    ==============================
+                // 绘制边缘灰色半透明小圆点
+                ctx.beginPath()
+                ctx.fillStyle = 'rgba(226,235,250,0.8)'
+                ctx.arc(x, y, 8, 0, 2 * Math.PI, false)
+                ctx.closePath()
+                ctx.fill()
+                // 绘制蓝色小圆点
+                ctx.beginPath()
+                ctx.fillStyle = '#208fe5'
+                ctx.arc(x, y, 4, 0, 2 * Math.PI, false)
+                ctx.closePath()
+                ctx.fill()
+            }
+         }
+        function drawOne (Cx, Cy) {
             // 清空画布
-            ctx.clearRect(-500,-500,1000,1000)
+            ctx.clearRect(-500, -500, 1000, 1000)
             //
             //周围的圆盘（蓝色）
             // ctx.translate(0,0); //将画笔移动到圆形
-            ctx.lineWidth = 3; //设置画笔的线宽
-            ctx.beginPath(); //画笔开始
+            //设置画笔的线宽
+            ctx.lineWidth = 3
+            //画笔开始
+            ctx.beginPath()
             // 绘制圆环边缘渐变边缘颜色
             var arcColor = ctx.createLinearGradient(-170, -170, 0, 170)
             arcColor.addColorStop(0, '#8ec1ff')
             arcColor.addColorStop(0.2, '#83beff')
             arcColor.addColorStop(0.5, '#75b1ff')
-            arcColor.addColorStop(0.7,'#5998ff')
+            arcColor.addColorStop(0.7, '#5998ff')
             arcColor.addColorStop(1, '#2065ff')
-            ctx.strokeStyle= arcColor;//设置画笔的颜色
-            ctx.arc(0,0,r - 80,0,2*Math.PI,false); //绘制圆形，坐标0,0,半径250-80，整圆（0-360度），false表示顺时针
-            ctx.closePath();
-            ctx.stroke(); //绘图
+            //设置画笔的颜色
+            ctx.strokeStyle= arcColor
+            //绘制圆形，坐标0,0,半径250-80，整圆（0-360度），false表示顺时针
+            ctx.arc(0,0,r - 80,0,2*Math.PI,false)
+            ctx.closePath()
+            ctx.stroke() //绘图
             // 将缓存的canvas直接绘制到界面（缓存了中间轮胎界面）
-            ctx.drawImage(tempCanvas,-140,-140);
-            ctx.font = '13px Arial';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillStyle="#000000";
+            ctx.drawImage(tempCanvas, -140, -140)
+            ctx.font = '13px Arial'
+            ctx.textAlign = 'center'
+            ctx.textBaseline = 'middle'
+            ctx.fillStyle = "#000000"
             var lengths = textArr.length
             //画刻度小圆点和边缘放射线
-            for(var i = 0;i<lengths;i++){
-                //
-                var rad = 2*Math.PI/lengths*i;
-                var x = (r - 80)*Math.cos(rad);
-                var y = (r - 80)*Math.sin(rad);
+            for(var i = 0; i < lengths; i++){
+                //计算幅度
+                var rad = 2 * Math.PI / lengths * i
+                var x = (r - 80) * Math.cos(rad)
+                var y = (r - 80) * Math.sin(rad)
                 // 计算点击的小圆心的偏差
                 let XX = Cx - 250
                 let YY = Cy- 260
@@ -154,17 +164,19 @@
                 let bottomY = y + 15
                 if (XX >= leftX && XX <= rightX && YY <= bottomY && YY >= topY ) {
                     // ctx.rotate( -Math.PI / 4);
-                    //旋转角度
+                    // 旋转角度
                     ctx.save()
-                    ctx.translate(x,y) // 旋转角度以每个小圆点为中心
-                    ctx.rotate( rad - Math.PI/2 ) // 因为一开始小圆点
-                    ctx.translate(-x, -y);
-
-                    ctx.beginPath(); //画笔开始
-                    ctx.moveTo(x, y);
-                    ctx.lineTo(x - 35, y + 70);
-                    ctx.lineTo(x + 35, y + 70);
-                    ctx.closePath();
+                    // 旋转角度以每个小圆点为中心
+                    // 因为一开始小圆点
+                    ctx.translate(x,y)
+                    ctx.rotate( rad - Math.PI/2 )
+                    ctx.translate(-x, -y)
+                    // 画笔开始
+                    ctx.beginPath()
+                    ctx.moveTo(x, y)
+                    ctx.lineTo(x - 35, y + 70)
+                    ctx.lineTo(x + 35, y + 70)
+                    ctx.closePath()
                     // 设置 颜色 渐变--->从中心向两边添加颜色
                     var sColor = ctx.createLinearGradient(x, y, x + 18, y + 50)
                     sColor.addColorStop(0, 'rgba(106,128,243,0.5)')
@@ -173,55 +185,55 @@
                     sColor.addColorStop(0.8, 'rgba(130,219,251,0.5)')
                     sColor.addColorStop(1, 'rgba(195,228,223,0.5)')
                     ctx.fillStyle = sColor
-                    ctx.fill();
+                    ctx.fill()
 
                     if (rad > Math.PI) {
                         // 因为文字需要显示在三角形的边缘，所以文字应该随着三角形旋转，才能一直维持在
                         // 三角形的边缘，由于旋转后当弧度大于π的值都会出现文字倒转问题，于是将文字进行旋转翻转
-                        ctx.save();
-                        ctx.beginPath();
+                        ctx.save()
+                        ctx.beginPath()
                         // 旋转文字
-                        rotateContext(ctx, x, y+75, Math.PI);
-                        ctx.font = '13px Arial';
-                        ctx.textAlign = 'center';
-                        ctx.fillStyle = "#000000";
-                        ctx.fillText(textArr[i], x, y+ 75);
-                        ctx.restore();
+                        rotateContext(ctx, x, y+75, Math.PI)
+                        ctx.font = '13px Arial'
+                        ctx.textAlign = 'center'
+                        ctx.fillStyle = "#000000"
+                        ctx.fillText(textArr[i], x, y+ 75)
+                        ctx.restore()
                     } else {
                         ctx.fillStyle = '#000000'
-                        ctx.fillText(textArr[i], x, y + 75);
+                        ctx.fillText(textArr[i], x, y + 75)
                     }
-                    ctx.restore();
-                    ctx.closePath();
+                    ctx.restore()
+                    ctx.closePath()
                 }
-                // //绘制圆形，坐标250,250 半径200，整圆（0-360度），false表示顺时针
+                // 绘制圆形，坐标250,250 半径200，整圆（0-360度），false表示顺时针
                 //    ==============================
                 // 绘制边缘灰色半透明小圆点
-                ctx.beginPath();
+                ctx.beginPath()
                 // ctx.fillStyle = '#9c9c9c';
                 ctx.fillStyle = 'rgba(226,235,250,0.5)'
-                ctx.arc(x,y,8,0,2*Math.PI,false);
-                ctx.closePath();
-                ctx.fill();
+                ctx.arc(x,y,8,0,2*Math.PI,false)
+                ctx.closePath()
+                ctx.fill()
                 // 绘制蓝色小圆点
-                ctx.beginPath();
-                ctx.arc(x,y,4,0,2*Math.PI,false);
+                ctx.beginPath()
+                ctx.arc(x,y,4,0,2*Math.PI,false)
                 //-----------------------------------------
                 if (XX >= leftX && XX <= rightX && YY <= bottomY && YY >= topY ) {
-                    ctx.fillStyle = '#ffffff';
-                    ctx.closePath();
-                    ctx.fill();
+                    ctx.fillStyle = '#ffffff'
+                    ctx.closePath()
+                    ctx.fill()
                 } else {
-                    ctx.fillStyle = '#5bb0ff';
-                    ctx.closePath();
-                    ctx.fill();
-                    ctx.beginPath();
+                    ctx.fillStyle = '#5bb0ff'
+                    ctx.closePath()
+                    ctx.fill()
+                    ctx.beginPath()
                     ctx.fillStyle = '#000000'
-                    let textX = (r - 40)*Math.cos(rad);
-                    let textY = (r - 40)*Math.sin(rad);
-                    ctx.fillText(textArr[i],textX,textY);
-                    ctx.fill();
-                    ctx.closePath();
+                    let textX = (r - 40)*Math.cos(rad)
+                    let textY = (r - 40)*Math.sin(rad)
+                    ctx.fillText(textArr[i],textX,textY)
+                    ctx.fill()
+                    ctx.closePath()
                 }
 
             }
